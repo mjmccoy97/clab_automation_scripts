@@ -2,11 +2,12 @@
 # 01.21.26 M. McCoy Script to report the BGP neighbors in network-instances
 # 01.22.26 Updated to discover SRLinux devices in Containerlab dynamically
 # 01.28.26 Added ANSI color coding for BGP states and refined logic
+# 01.28.26 REWRITE: Replaced pygnmi with gnmic subprocess for stability
 
 import argparse
 import json
 import subprocess
-from pygnmi.client import gNMIclient
+import sys
 
 # ANSI Color Codes
 GREEN = "\033[92m"
@@ -17,34 +18,53 @@ RESET = "\033[0m"
 def discover_devices():
     """Discover SR Linux devices based on the specific JSON structure provided."""
     try:
-        cmd = "containerlab inspect --format json"
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        cmd = ["containerlab", "inspect", "--format", "json"]
+        result = subprocess.run(cmd, capture_output=True, text=True)
         data = json.loads(result.stdout)
         
         devices = []
-        for lab_nodes in data.values():
-            for node in lab_nodes:
-                if node.get('kind') == 'nokia_srlinux':
-                    devices.append(node['name'])
+        # Support both old and new clab JSON formats
+        nodes_list = data if isinstance(data, list) else data.get('lab_nodes', [])
+        if not nodes_list and isinstance(data, dict):
+            for val in data.values():
+                if isinstance(val, list):
+                    nodes_list.extend(val)
+
+        for node in nodes_list:
+            if node.get('kind') == 'nokia_srlinux':
+                devices.append(node['name'])
         return devices
     except Exception as e:
         print(f"Error parsing containerlab output: {e}")
         return []
 
-def get_prefixed_key(data_dict, base_name):
-    """Finds a key in a dict that ends with the base_name."""
-    if not isinstance(data_dict, dict): return {}
-    for key in data_dict.keys():
-        if key == base_name or key.endswith(f":{base_name}"):
-            return data_dict[key]
-    return {}
+def get_bgp_data_via_gnmic(router, user, pwd, port, ni_filter):
+    """Fetches BGP neighbor data using gnmic CLI."""
+    # Construct the path based on filter
+    path = f"/network-instance[name={ni_filter}]/protocols/bgp/neighbor"
+    
+    cmd = [
+        "gnmic", "-a", f"{router}:{port}",
+        "-u", user, "-p", pwd,
+        "--skip-verify", "get",
+        "--path", path, "--format", "json"
+    ]
+    
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        return json.loads(result.stdout)
+    except subprocess.CalledProcessError as e:
+        # Check if the error is just a 'not found' or a connection issue
+        if "NotFound" in e.stderr:
+            return {}
+        raise Exception(e.stderr.strip())
 
 def main():
     # 1. CLI Setup
-    parser = argparse.ArgumentParser(description='Obtain BGP peer state via gNMI.')
+    parser = argparse.ArgumentParser(description='Obtain BGP peer state via gnmic.')
     parser.add_argument('-ni', type=str, default='*', 
                         help='Specific network-instance name (e.g., "default"). Use "*" for all.')
-    parser.add_argument('-p', type=str, default='admin', help='SRLinux password')
+    parser.add_argument('-p', type=str, default='NokiaSrl1!', help='SRLinux password')
     parser.add_argument('-u', type=str, default='admin', help='SRLinux username')
     parser.add_argument('--port', type=int, default=57401, help='gNMI port')
 
@@ -55,72 +75,67 @@ def main():
     if not routers:
         print(f"{RED}No SRLinux devices found. Exiting.{RESET}")
         exit(1)
-    print(f'{BOLD}Found {len(routers)} SRLinux Devices')
+    print(f'{BOLD}Found {len(routers)} SRLinux Devices{RESET}')
 
-    path = [f'network-instance[name={args.ni}]/protocols/bgp/neighbor']
     total_peers = 0
     total_est_peers = 0 
 
     for router in routers:
-        target_params = {
-            'target': (router, args.port),
-            'username': args.u,
-            'password': args.p,
-            'insecure': True,
-            'timeout': 10
-        }   
-
         print(f"\n{'*' * 60}\nRouter: {BOLD}{router}{RESET} (Filter: {args.ni})\n{'*' * 60}")
 
         try:
-            with gNMIclient(**target_params) as gc:
-                result = gc.get(path=path, datatype='state')
-                updates = result.get('notification', [{}])[0].get('update', [])
+            raw_data = get_bgp_data_via_gnmic(router, args.u, args.p, args.port, args.ni)
+            
+            # 1. Access the first message in the list
+            if not raw_data or not isinstance(raw_data, list):
+                continue
+            
+            updates = raw_data[0].get('updates', [])
+            for update in updates:
+                # 2. Access the values, then the empty string key ""
+                values_container = update.get('values', {}).get('', {})
+                
+                # 3. Find the network-instance key (ignoring prefixes)
+                ni_key = next((k for k in values_container.keys() if 'network-instance' in k), None)
+                if not ni_key: continue
+                
+                ni_list = values_container[ni_key]
+                if not isinstance(ni_list, list): ni_list = [ni_list]
 
-                for update in updates:
-                    val = update.get('val', {})
-                    raw_ni_data = get_prefixed_key(val, 'network-instance')
-                    ni_list = raw_ni_data if isinstance(raw_ni_data, list) else [raw_ni_data]
-
-                    for ni in ni_list:
-                        if not ni and args.ni == '*': continue
-                        ni_name = ni.get('name', args.ni)
+                for ni in ni_list:
+                    ni_name = ni.get('name', 'unknown')
+                    # 4. Dig into protocols -> bgp -> neighbor
+                    protocols = ni.get('protocols', {})
+                    bgp_key = next((k for k in protocols.keys() if 'bgp' in k), None)
+                    if not bgp_key: continue
+                    
+                    bgp_data = protocols[bgp_key]
+                    neighbors = bgp_data.get('neighbor', [])
+                    
+                    peer_count = 0
+                    estab_count = 0
+                    
+                    for n in neighbors:
+                        peer = n.get('peer-address', 'N/A')
+                        state = n.get('session-state', 'N/A')
+                        group = n.get('peer-group', 'N/A')
+                        peer_type = n.get('peer-type', 'N/A')
                         
-                        protocols = ni.get('protocols', ni)
-                        bgp_container = get_prefixed_key(protocols, 'bgp')
-                        neighbor_list = bgp_container.get('neighbor', [])
-                        
-                        if not neighbor_list and 'neighbor' in val:
-                            neighbor_list = val['neighbor']
+                        peer_count += 1
+                        total_peers += 1
 
-                        if isinstance(neighbor_list, dict):
-                            neighbor_list = [neighbor_list]
+                        if state.lower() == 'established':
+                            color = GREEN
+                            estab_count += 1
+                            total_est_peers += 1
+                        else:
+                            color = RED
 
-                        peer_count = 0
-                        estab_count = 0
-                        for n in neighbor_list:
-                            peer = n.get('peer-address', 'N/A')
-                            state = n.get('session-state', 'N/A')
-                            group = n.get('peer-group', 'N/A')
-                            peer_type = n.get('peer-type', 'N/A')
-                            
-                            peer_count += 1
-                            total_peers += 1
-
-                            # Apply Color Coding
-                            if state.lower() == 'established':
-                                color = GREEN
-                                estab_count += 1
-                                total_est_peers += 1
-                            else:
-                                color = RED
-
-                            print(f"  Instance: {ni_name:<12} | Peer: {peer:<15} | Group: {group:<15} | Type: {peer_type:<10} | State: {color}{state}{RESET}")
-                        
-                        # Print instance summary
-                        if peer_count > 0:
-                            print(f"  {'-' * 110}")
-                            print(f"  Instance Summary: {ni_name:<12} | Total: {peer_count} | Up: {GREEN}{estab_count}{RESET}")
+                        print(f"  Instance: {ni_name:<12} | Peer: {peer:<15} | Group: {group:<15} | Type: {peer_type:<10} | State: {color}{state}{RESET}")
+                    
+                    if peer_count > 0:
+                        print(f"  {'-' * 105}")
+                        print(f"  Instance Summary: {ni_name:<12} | Total: {peer_count} | Up: {GREEN}{estab_count}{RESET}")
 
         except Exception as e:
             print(f"{RED}Error on {router}: {e}{RESET}")
