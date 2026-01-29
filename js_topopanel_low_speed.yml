@@ -8,7 +8,7 @@ anchors:
     - color: "#bec8d2" # grey
       level: 0
     - color: "#4BDD33" # green
-      level: 1000
+      level: 1999
     - color: "#FFFF00" # yellow
       level: 5000
     - color: "#FF8000" # orange
@@ -20,9 +20,9 @@ anchors:
     units: bps
     decimalPoints: 1
     valueMappings:
-      - valueMax: 199999
+      - valueMax: 1999
         text:
-      - valueMin: 200000
+      - valueMin: 2000
 cellIdPreamble: cell-
 cells:
   # ==========================================
