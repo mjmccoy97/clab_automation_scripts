@@ -21,7 +21,7 @@ anchors:
     decimalPoints: 1
     valueMappings:
       - valueMax: 199999
-        text: ​
+        text:
       - valueMin: 200000
 cellIdPreamble: cell-
 cells:
