@@ -8,13 +8,13 @@ anchors:
     - color: "#bec8d2" # grey
       level: 0
     - color: "#4BDD33" # green
-      level: 10000
+      level: 1000
     - color: "#FFFF00" # yellow
-      level: 50000
+      level: 5000
     - color: "#FF8000" # orange
-      level: 100000
+      level: 10000
     - color: "#FF3154" # red
-      level: 500000
+      level: 50000
   label-config: &label-config
     separator: replace
     units: bps
