@@ -42,19 +42,21 @@ def get_bgp_data_via_gnmic(router, user, pwd, port, ni_filter):
     """Fetches BGP neighbor data using gnmic CLI."""
     # Construct the path based on filter
     path = f"/network-instance[name={ni_filter}]/protocols/bgp/neighbor"
-    
+
     cmd = [
         "gnmic", "-a", f"{router}:{port}",
         "-u", user, "-p", pwd,
-        "--skip-verify", "get",
-        "--path", path, "--format", "json"
+        "--skip-verify", 
+        "-e", "json_ietf",  # <--- ADD THIS (Encoding for the router)
+        "get",
+        "--path", path, 
+        "--format", "json"  # <--- Use "json" here for the Python script to parse easily
     ]
     
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         return json.loads(result.stdout)
     except subprocess.CalledProcessError as e:
-        # Check if the error is just a 'not found' or a connection issue
         if "NotFound" in e.stderr:
             return {}
         raise Exception(e.stderr.strip())
@@ -85,7 +87,7 @@ def main():
 
         try:
             raw_data = get_bgp_data_via_gnmic(router, args.u, args.p, args.port, args.ni)
-            
+
             # 1. Access the first message in the list
             if not raw_data or not isinstance(raw_data, list):
                 continue
