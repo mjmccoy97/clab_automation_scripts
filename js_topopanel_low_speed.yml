@@ -210,7 +210,7 @@ cells:
     dataRef: pod1wan1:e1-2:out
     label: *label-config
     strokeColor:
-  thresholds: *thresholds-traffic  
+      thresholds: *thresholds-traffic  
   clab-poc-pod1wan1:e1-4:clab-poc-client2:eth1:
     dataRef: oper-state:pod1wan1:e1-4
     fillcolor:
