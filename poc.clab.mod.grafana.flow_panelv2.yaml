@@ -1,98 +1,130 @@
----
+config:
+  cellIdPreamble: ""
+  testDataGeneration: true
+
 anchors:
   thresholds-operstate: &thresholds-operstate
-    - color: "#FF3154" # red
+    - color: red
       level: 0
-    - color: "#4BDD33" # green
+    - color: green
       level: 1
   thresholds-traffic: &thresholds-traffic
-    - color: "#bec8d2" # grey
+    - color: gray
       level: 0
-    - color: "#4BDD33" # green
-      level: 199999
-    - color: "#FFFF00" # yellow
-      level: 500000
-    - color: "#FF8000" # orange
-      level: 1000000
-    - color: "#FF3154" # red
-      level: 5000000
+    - color: green
+      level: 1999
+    - color: yellow
+      level: 5000
+    - color: orange
+      level: 10000
+    - color: red
+      level: 50000
   label-config: &label-config
     separator: replace
     units: bps
     decimalPoints: 1
     valueMappings:
-      - valueMax: 199999
+      - valueMax: 1999
         text: " "
-      - valueMin: 200000
-
-cellIdPreamble: cell-
+      - valueMin: 2000
 
 cells:
-  # ==========================================
-  # POD 1 <-> SPINE 1
-  # ==========================================
-  clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1:
-    dataRef: "oper-state:c1spine1:e1-1"
-    fillColor:
-      thresholds: *thresholds-operstate
-  link_id:clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1:
-    dataRef: "c1spine1:e1-1:out"
+  # --- SPINE 1 MAPPINGS ---
+  "cell-clab-poc-c1spine1":
+    dataRef: "oper-state:clab-poc-c1spine1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-mid:clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1":
+    dataRef: "oper-state:clab-poc-c1spine1:e1-1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1":
+    dataRef: "clab-poc-c1spine1:e1-1:out"
     label: *label-config
-    strokeColor:
-      thresholds: *thresholds-traffic
+    strokeColor: { thresholds: *thresholds-traffic }
 
-  clab-poc-c1pod1:e1-1:clab-poc-c1spine1:e1-1:
-    dataRef: "oper-state:c1pod1:e1-1"
-    fillColor:
-      thresholds: *thresholds-operstate
-  link_id:clab-poc-c1pod1:e1-1:clab-poc-c1spine1:e1-1:
-    dataRef: "c1pod1:e1-1:out"
+  "cell-mid:clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1":
+    dataRef: "oper-state:clab-poc-c1spine1:e1-2"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1":
+    dataRef: "clab-poc-c1spine1:e1-2:out"
     label: *label-config
-    strokeColor:
-      thresholds: *thresholds-traffic
+    strokeColor: { thresholds: *thresholds-traffic }
 
-  # ==========================================
-  # POD 2 <-> SPINE 1
-  # ==========================================
-  clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1:
-    dataRef: "oper-state:c1spine1:e1-2"
-    fillColor:
-      thresholds: *thresholds-operstate
-  link_id:clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1:
-    dataRef: "c1spine1:e1-2:out"
+  "cell-mid:clab-poc-c1spine1:e1-3:clab-poc-c1pod3:e1-1":
+    dataRef: "oper-state:clab-poc-c1spine1:e1-3"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-c1spine1:e1-3:clab-poc-c1pod3:e1-1":
+    dataRef: "clab-poc-c1spine1:e1-3:out"
     label: *label-config
-    strokeColor:
-      thresholds: *thresholds-traffic
+    strokeColor: { thresholds: *thresholds-traffic }
 
-  clab-poc-c1pod2:e1-1:clab-poc-c1spine1:e1-2:
-    dataRef: "oper-state:c1pod2:e1-1"
-    fillColor:
-      thresholds: *thresholds-operstate
-  link_id:clab-poc-c1pod2:e1-1:clab-poc-c1spine1:e1-2:
-    dataRef: "c1pod2:e1-1:out"
+  # --- SPINE 2 MAPPINGS ---
+  "cell-clab-poc-c2spine1":
+    dataRef: "oper-state:clab-poc-c2spine1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-mid:clab-poc-c2spine1:e1-1:clab-poc-c2pod1:e1-1":
+    dataRef: "oper-state:clab-poc-c2spine1:e1-1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-c2spine1:e1-1:clab-poc-c2pod1:e1-1":
+    dataRef: "clab-poc-c2spine1:e1-1:out"
     label: *label-config
-    strokeColor:
-      thresholds: *thresholds-traffic
+    strokeColor: { thresholds: *thresholds-traffic }
 
-  # ==========================================
-  # POD 3 <-> SPINE 1
-  # ==========================================
-  clab-poc-c1spine1:e1-3:clab-poc-c1pod3:e1-1:
-    dataRef: "oper-state:c1spine1:e1-3"
-    fillColor:
-      thresholds: *thresholds-operstate
-  link_id:clab-poc-c1spine1:e1-3:clab-poc-c1pod3:e1-1:
-    dataRef: "c1spine1:e1-3:out"
+  # --- POD 1 WAN MAPPINGS ---
+  "cell-clab-poc-pod1wan1":
+    dataRef: "oper-state:clab-poc-pod1wan1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-mid:clab-poc-pod1wan1:e1-1:clab-poc-c1pod1:e1-2":
+    dataRef: "oper-state:clab-poc-pod1wan1:e1-1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-pod1wan1:e1-1:clab-poc-c1pod1:e1-2":
+    dataRef: "clab-poc-pod1wan1:e1-1:out"
     label: *label-config
-    strokeColor:
-      thresholds: *thresholds-traffic
+    strokeColor: { thresholds: *thresholds-traffic }
 
-  clab-poc-c1pod3:e1-1:clab-poc-c1spine1:e1-3:
-    dataRef: "oper-state:c1pod3:e1-1"
-    fillColor:
-      thresholds: *thresholds-operstate
-  link_id:clab-poc-c1pod3:e1-1:clab-poc-c1spine1:e1-3:
-    dataRef: "c1pod3:e1-1:out"
+  # --- CLIENT 1 MAPPINGS ---
+  "cell-clab-poc-client1":
+    dataRef: "oper-state:clab-poc-client1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-mid:clab-poc-pod1wan1:e1-2:clab-poc-client1:eth1":
+    dataRef: "oper-state:clab-poc-pod1wan1:e1-2"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-pod1wan1:e1-2:clab-poc-client1:eth1":
+    dataRef: "clab-poc-pod1wan1:e1-2:out"
     label: *label-config
-    strokeColor:
-      thresholds: *thresholds-traffic
+    strokeColor: { thresholds: *thresholds-traffic }
+
+  # --- POD 2 LEAF A MAPPINGS ---
+  "cell-clab-poc-pod2leaf1a":
+    dataRef: "oper-state:clab-poc-pod2leaf1a"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-mid:clab-poc-pod2leaf1a:e1-1:clab-poc-c1pod2:e1-2":
+    dataRef: "oper-state:clab-poc-pod2leaf1a:e1-1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-pod2leaf1a:e1-1:clab-poc-c1pod2:e1-2":
+    dataRef: "clab-poc-pod2leaf1a:e1-1:out"
+    label: *label-config
+    strokeColor: { thresholds: *thresholds-traffic }
+
+  # --- POD 2 LEAF B MAPPINGS ---
+  "cell-clab-poc-pod2leaf1b":
+    dataRef: "oper-state:clab-poc-pod2leaf1b"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-mid:clab-poc-pod2leaf1b:e1-1:clab-poc-c1pod2:e1-4":
+    dataRef: "oper-state:clab-poc-pod2leaf1b:e1-1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-pod2leaf1b:e1-1:clab-poc-c1pod2:e1-4":
+    dataRef: "clab-poc-pod2leaf1b:e1-1:out"
+    label: *label-config
+    strokeColor: { thresholds: *thresholds-traffic }
+
+  # --- POD 3 LEAF A MAPPINGS ---
+  "cell-clab-poc-pod3leaf1a":
+    dataRef: "oper-state:clab-poc-pod3leaf1a"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-mid:clab-poc-pod3leaf1a:e1-1:clab-poc-c1pod3:e1-2":
+    dataRef: "oper-state:clab-poc-pod3leaf1a:e1-1"
+    fillColor: { thresholds: *thresholds-operstate }
+  "cell-link_id:clab-poc-pod3leaf1a:e1-1:clab-poc-c1pod3:e1-2":
+    dataRef: "clab-poc-pod3leaf1a:e1-1:out"
+    label: *label-config
+    strokeColor: { thresholds: *thresholds-traffic }
