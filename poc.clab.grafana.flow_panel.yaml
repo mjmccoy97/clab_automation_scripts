@@ -9,21 +9,21 @@ anchors:
   - color: gray
     level: 0
   - color: green
-    level: 1999
+    level: 199999
   - color: yellow
-    level: 5000
+    level: 500000
   - color: orange
-    level: 10000
+    level: 1000000
   - color: red
-    level: 50000
+    level: 5000000
   label-config: &label-config
     separator: replace
     units: bps
     decimalPoints: 1
     valueMappings:
-    - valueMax: 1999
+    - valueMax: 199999
       text: ​
-    - valueMin: 2000
+    - valueMin: 200000
 cellIdPreamble: cell-
 cells:
   clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1:
