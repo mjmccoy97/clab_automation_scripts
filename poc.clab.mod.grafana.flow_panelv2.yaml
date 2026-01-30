@@ -25,7 +25,7 @@ anchors:
         text: " "
       - valueMin: 200000
 
-cellIdPreamble: "" 
+cellIdPreamble: cell-
 
 cells:
   # ==========================================
