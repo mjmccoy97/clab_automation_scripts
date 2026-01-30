@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="689" viewBox="0 0 900 689" style="background-color: #121212;">
+  <style>
+    .node-rect { fill: #2c3e50; stroke: #ecf0f1; stroke-width: 1.5; }
+    .label { fill: white; font-family: Arial; font-size: 11px; font-weight: bold; pointer-events: none; }
+    .link-path { fill: none; stroke: #444; stroke-width: 2; }
+  </style>
+
+  <g id="clab-poc-c1spine1" transform="translate(266, 14)">
+    <rect class="node-rect" width="75" height="40" rx="4" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">c1spine1</text>
+  </g>
+  <g id="clab-poc-c2spine1" transform="translate(577, 14)">
+    <rect class="node-rect" width="75" height="40" rx="4" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">c2spine1</text>
+  </g>
+
+  <g id="clab-poc-c1pod1" transform="translate(39, 264)">
+    <rect class="node-rect" width="75" height="40" rx="4" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">c1pod1</text>
+  </g>
+  <g id="clab-poc-c2pod1" transform="translate(145, 264)">
+    <rect class="node-rect" width="75" height="40" rx="4" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">c2pod1</text>
+  </g>
+  <g id="clab-poc-c1pod2" transform="translate(350, 264)">
+    <rect class="node-rect" width="75" height="40" rx="4" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">c1pod2</text>
+  </g>
+  <g id="clab-poc-c2pod2" transform="translate(456, 264)">
+    <rect class="node-rect" width="75" height="40" rx="4" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">c2pod2</text>
+  </g>
+  <g id="clab-poc-c1pod3" transform="translate(674, 264)">
+    <rect class="node-rect" width="75" height="40" rx="4" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">c1pod3</text>
+  </g>
+  <g id="clab-poc-c2pod3" transform="translate(780, 264)">
+    <rect class="node-rect" width="75" height="40" rx="4" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">c2pod3</text>
+  </g>
+
+  <g id="clab-poc-pod1wan1" transform="translate(39, 450.44)">
+    <rect class="node-rect" width="75" height="40" rx="4" fill="#1a5276" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">pod1wan1</text>
+  </g>
+  <g id="clab-poc-pod2wan1" transform="translate(350, 450.44)">
+    <rect class="node-rect" width="75" height="40" rx="4" fill="#1a5276" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">pod2wan1</text>
+  </g>
+  <g id="clab-poc-pod3wan1" transform="translate(674, 450.44)">
+    <rect class="node-rect" width="75" height="40" rx="4" fill="#1a5276" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">pod3wan1</text>
+  </g>
+
+  <g id="clab-poc-client1" transform="translate(39, 608.89)">
+    <rect class="node-rect" width="75" height="40" rx="4" fill="#1e8449" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">client1</text>
+  </g>
+  <g id="clab-poc-client2" transform="translate(180, 608.89)">
+    <rect class="node-rect" width="75" height="40" rx="4" fill="#1e8449" />
+    <text x="37.5" y="25" text-anchor="middle" class="label">client2</text>
+  </g>
+
+  <path id="link:clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1" class="link-path" d="M 303,54 L 76,264" />
+  <path id="link:clab-poc-pod1wan1:e1-1:clab-poc-c1pod1:e1-2" class="link-path" d="M 76,450 L 76,304" />
+  <path id="link:clab-poc-client1:e1-1:clab-poc-pod1wan1:e1-2" class="link-path" d="M 76,608 L 76,490" />
+</svg>
