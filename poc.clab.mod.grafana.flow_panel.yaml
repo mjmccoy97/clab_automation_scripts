@@ -22,9 +22,9 @@ anchors:
     decimalPoints: 1
     valueMappings:
     - valueMax: 1999
-      text: ​
+      text:
     - valueMin: 2000
-cellIdPreamble: cell-
+cellIdPreamble: ""
 cells:
   clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1:
     dataRef: oper-state:clab-poc-c1spine1:e1-1
