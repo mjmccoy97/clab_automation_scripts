@@ -32,21 +32,23 @@ cells:
   # pod1wan1 <-> c1pod1
   clab-poc-pod1wan1:e1-1:clab-poc-c1pod1:e1-2:
     dataRef: oper-state:pod1wan1:e1-1
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod1wan1:e1-1:clab-poc-c1pod1:e1-2:
     dataRef: pod1wan1:e1-1:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # pod1wan1 <-> c2pod1
   clab-poc-pod1wan1:e1-3:clab-poc-c2pod1:e1-2:
     dataRef: oper-state:pod1wan1:e1-3
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod1wan1:e1-3:clab-poc-c2pod1:e1-2:
     dataRef: pod1wan1:e1-3:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # ==========================================
   # POD 2 & 3 LEAF A CONNECTIONS
   # ==========================================
@@ -54,39 +56,43 @@ cells:
   # pod2leaf1a <-> c1pod2
   clab-poc-pod2leaf1a:e1-1:clab-poc-c1pod2:e1-2:
     dataRef: oper-state:pod2leaf1a:e1-1
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod2leaf1a:e1-1:clab-poc-c1pod2:e1-2:
     dataRef: pod2leaf1a:e1-1:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # pod2leaf1a <-> c2pod2
   clab-poc-pod2leaf1a:e1-3:clab-poc-c2pod2:e1-2:
     dataRef: oper-state:pod2leaf1a:e1-3
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod2leaf1a:e1-3:clab-poc-c2pod2:e1-2:
     dataRef: pod2leaf1a:e1-3:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # pod3leaf1a <-> c1pod3
   clab-poc-pod3leaf1a:e1-1:clab-poc-c1pod3:e1-2:
     dataRef: oper-state:pod3leaf1a:e1-1
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod3leaf1a:e1-1:clab-poc-c1pod3:e1-2:
     dataRef: pod3leaf1a:e1-1:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # pod3leaf1a <-> c2pod3
   clab-poc-pod3leaf1a:e1-3:clab-poc-c2pod3:e1-2:
     dataRef: oper-state:pod3leaf1a:e1-3
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod3leaf1a:e1-3:clab-poc-c2pod3:e1-2:
     dataRef: pod3leaf1a:e1-3:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # ==========================================
   # POD 2 & 3 LEAF B CONNECTIONS
   # ==========================================
@@ -94,39 +100,43 @@ cells:
   # pod2leaf1b <-> c1pod2
   clab-poc-pod2leaf1b:e1-1:clab-poc-c1pod2:e1-4:
     dataRef: oper-state:pod2leaf1b:e1-1
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod2leaf1b:e1-1:clab-poc-c1pod2:e1-4:
     dataRef: pod2leaf1b:e1-1:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # pod2leaf1b <-> c2pod2
   clab-poc-pod2leaf1b:e1-3:clab-poc-c2pod2:e1-4:
     dataRef: oper-state:pod2leaf1b:e1-3
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod2leaf1b:e1-3:clab-poc-c2pod2:e1-4:
     dataRef: pod2leaf1b:e1-3:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # pod3leaf1b <-> c1pod3
   clab-poc-pod3leaf1b:e1-1:clab-poc-c1pod3:e1-4:
     dataRef: oper-state:pod3leaf1b:e1-1
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod3leaf1b:e1-1:clab-poc-c1pod3:e1-4:
     dataRef: pod3leaf1b:e1-1:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # pod3leaf1b <-> c2pod3
   clab-poc-pod3leaf1b:e1-3:clab-poc-c2pod3:e1-4:
     dataRef: oper-state:pod3leaf1b:e1-3
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod3leaf1b:e1-3:clab-poc-c2pod3:e1-4:
     dataRef: pod3leaf1b:e1-3:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # ==========================================
   # SPINES C1 & C2
   # ==========================================
@@ -134,53 +144,59 @@ cells:
   # c1spine1 connections
   clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1:
     dataRef: oper-state:c1spine1:e1-1
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1:
     dataRef: c1spine1:e1-1:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1:
     dataRef: oper-state:c1spine1:e1-2
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1:
     dataRef: c1spine1:e1-2:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   clab-poc-c1spine1:e1-3:clab-poc-c1pod3:e1-1:
     dataRef: oper-state:c1spine1:e1-3
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-c1spine1:e1-3:clab-poc-c1pod3:e1-1:
     dataRef: c1spine1:e1-3:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # c2spine1 connections
   clab-poc-c2spine1:e1-1:clab-poc-c2pod1:e1-1:
     dataRef: oper-state:c2spine1:e1-1
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-c2spine1:e1-1:clab-poc-c2pod1:e1-1:
     dataRef: c2spine1:e1-1:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   clab-poc-c2spine1:e1-2:clab-poc-c2pod2:e1-1:
     dataRef: oper-state:c2spine1:e1-2
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-c2spine1:e1-2:clab-poc-c2pod2:e1-1:
     dataRef: c2spine1:e1-2:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   clab-poc-c2spine1:e1-3:clab-poc-c2pod3:e1-1:
     dataRef: oper-state:c2spine1:e1-3
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-c2spine1:e1-3:clab-poc-c2pod3:e1-1:
     dataRef: c2spine1:e1-3:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # ==========================================
   # CLIENT CONNECTIONS
   # ==========================================
@@ -188,18 +204,20 @@ cells:
   # pod1wan1 -> client1/2
   clab-poc-pod1wan1:e1-2:clab-poc-client1:eth1:
     dataRef: oper-state:pod1wan1:e1-2
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod1wan1:e1-2:clab-poc-client1:eth1:
     dataRef: pod1wan1:e1-2:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-  
+    strokeColor:
+  thresholds: *thresholds-traffic  
   clab-poc-pod1wan1:e1-4:clab-poc-client2:eth1:
     dataRef: oper-state:pod1wan1:e1-4
-    fillColor: { thresholds: *thresholds-operstate }
+    fillcolor:
+      thresholds: *thresholds-operstate
   link_id:link:clab-poc-pod1wan1:e1-4:clab-poc-client2:eth1:
     dataRef: pod1wan1:e1-4:out
     label: *label-config
-    strokeColor: { thresholds: *thresholds-traffic }
-
+    strokeColor:
+      thresholds: *thresholds-traffic
   # (Additional clients follow same pattern)
