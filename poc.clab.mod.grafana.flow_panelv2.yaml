@@ -1,0 +1,98 @@
+---
+anchors:
+  thresholds-operstate: &thresholds-operstate
+    - color: "#FF3154" # red
+      level: 0
+    - color: "#4BDD33" # green
+      level: 1
+  thresholds-traffic: &thresholds-traffic
+    - color: "#bec8d2" # grey
+      level: 0
+    - color: "#4BDD33" # green
+      level: 199999
+    - color: "#FFFF00" # yellow
+      level: 500000
+    - color: "#FF8000" # orange
+      level: 1000000
+    - color: "#FF3154" # red
+      level: 5000000
+  label-config: &label-config
+    separator: replace
+    units: bps
+    decimalPoints: 1
+    valueMappings:
+      - valueMax: 199999
+        text: " "
+      - valueMin: 200000
+
+cellIdPreamble: "" 
+
+cells:
+  # ==========================================
+  # POD 1 <-> SPINE 1
+  # ==========================================
+  clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1:
+    dataRef: "oper-state:c1spine1:e1-1"
+    fillColor:
+      thresholds: *thresholds-operstate
+  link_id:clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1:
+    dataRef: "c1spine1:e1-1:out"
+    label: *label-config
+    strokeColor:
+      thresholds: *thresholds-traffic
+
+  clab-poc-c1pod1:e1-1:clab-poc-c1spine1:e1-1:
+    dataRef: "oper-state:c1pod1:e1-1"
+    fillColor:
+      thresholds: *thresholds-operstate
+  link_id:clab-poc-c1pod1:e1-1:clab-poc-c1spine1:e1-1:
+    dataRef: "c1pod1:e1-1:out"
+    label: *label-config
+    strokeColor:
+      thresholds: *thresholds-traffic
+
+  # ==========================================
+  # POD 2 <-> SPINE 1
+  # ==========================================
+  clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1:
+    dataRef: "oper-state:c1spine1:e1-2"
+    fillColor:
+      thresholds: *thresholds-operstate
+  link_id:clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1:
+    dataRef: "c1spine1:e1-2:out"
+    label: *label-config
+    strokeColor:
+      thresholds: *thresholds-traffic
+
+  clab-poc-c1pod2:e1-1:clab-poc-c1spine1:e1-2:
+    dataRef: "oper-state:c1pod2:e1-1"
+    fillColor:
+      thresholds: *thresholds-operstate
+  link_id:clab-poc-c1pod2:e1-1:clab-poc-c1spine1:e1-2:
+    dataRef: "c1pod2:e1-1:out"
+    label: *label-config
+    strokeColor:
+      thresholds: *thresholds-traffic
+
+  # ==========================================
+  # POD 3 <-> SPINE 1
+  # ==========================================
+  clab-poc-c1spine1:e1-3:clab-poc-c1pod3:e1-1:
+    dataRef: "oper-state:c1spine1:e1-3"
+    fillColor:
+      thresholds: *thresholds-operstate
+  link_id:clab-poc-c1spine1:e1-3:clab-poc-c1pod3:e1-1:
+    dataRef: "c1spine1:e1-3:out"
+    label: *label-config
+    strokeColor:
+      thresholds: *thresholds-traffic
+
+  clab-poc-c1pod3:e1-1:clab-poc-c1spine1:e1-3:
+    dataRef: "oper-state:c1pod3:e1-1"
+    fillColor:
+      thresholds: *thresholds-operstate
+  link_id:clab-poc-c1pod3:e1-1:clab-poc-c1spine1:e1-3:
+    dataRef: "c1pod3:e1-1:out"
+    label: *label-config
+    strokeColor:
+      thresholds: *thresholds-traffic
