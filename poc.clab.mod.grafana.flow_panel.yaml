@@ -260,21 +260,21 @@ cells:
     label: *label-config
     strokeColor:
       thresholds: *thresholds-traffic
-  clab-poc-pod2leaf1a:e1-1:clab-poc-c1pod2:e1-2:
-    dataRef: oper-state:clab-poc-pod2leaf1a:e1-1
+  clab-poc-pod2leaf1a-e1-1-clab-poc-c1pod2-e1-2:
+    dataRef: oper-state:clab-poc-pod2leaf1a-e1-1
     fillColor:
       thresholds: *thresholds-operstate
-  link_id:clab-poc-pod2leaf1a:e1-1:clab-poc-c1pod2:e1-2:
-    dataRef: clab-poc-pod2leaf1a:e1-1:out
+  link_id:clab-poc-pod2leaf1a-e1-1-clab-poc-c1pod2-e1-2:
+    dataRef: clab-poc-pod2leaf1a-e1-1-out
     label: *label-config
     strokeColor:
       thresholds: *thresholds-traffic
-  clab-poc-pod2leaf1a:e1-3:clab-poc-c2pod2:e1-2:
-    dataRef: oper-state:clab-poc-pod2leaf1a:e1-3
+  clab-poc-pod2leaf1a-e1-3:clab-poc-c2pod2-e1-2:
+    dataRef: oper-state:clab-poc-pod2leaf1a-e1-3
     fillColor:
       thresholds: *thresholds-operstate
-  link_id:clab-poc-pod2leaf1a:e1-3:clab-poc-c2pod2:e1-2:
-    dataRef: clab-poc-pod2leaf1a:e1-3:out
+  link_id:clab-poc-pod2leaf1a-e1-3-clab-poc-c2pod2-e1-2:
+    dataRef: clab-poc-pod2leaf1a-e1-3-out
     label: *label-config
     strokeColor:
       thresholds: *thresholds-traffic
