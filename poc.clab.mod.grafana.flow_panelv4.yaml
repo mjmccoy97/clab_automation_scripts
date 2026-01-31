@@ -1,3 +1,4 @@
+---
 config:
   cellIdPreamble: ""
   testDataGeneration: true
@@ -12,9 +13,20 @@ anchors:
     - color: gray
       level: 0
     - color: green
-      level: 1000
+      level: 199
     - color: yellow
-      level: 100000000
+      level: 500
+    - color: orange
+      level: 1000
+    - color: red
+      level: 5000
+  label-config: &label-config
+    units: bps
+    decimalPoints: 1
+    valueMappings:
+      - valueMax: 199
+        text: " "
+      - valueMin: 200
 
 cells:
   # --- CORE INFRASTRUCTURE (Icons) ---
