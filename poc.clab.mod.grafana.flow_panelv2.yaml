@@ -12,9 +12,13 @@ anchors:
     - color: gray
       level: 0
     - color: green
-      level: 1000
+      level: 199
     - color: yellow
-      level: 100000000
+      level: 500
+    - color: orange
+      level: 1000
+    - color: red
+      level: 5000
 
 cells:
   # --- CORE INFRASTRUCTURE (Icons) ---
