@@ -12,64 +12,43 @@ anchors:
     - color: gray
       level: 0
     - color: green
-      level: 1999
-    - color: red
-      level: 50000
+      level: 1000
+    - color: yellow
+      level: 1000000
 
 cells:
-  # --- POD 1 (Spine 1 & 2 to Pod 1 & WAN) ---
+  # --- CORE NODES (The literal IDs from your list) ---
   "cell-clab-poc-c1spine1": { dataRef: "oper-state:c1spine1", fillColor: { thresholds: *thresholds-operstate } }
+  "cell-clab-poc-c2spine1": { dataRef: "oper-state:c2spine1", fillColor: { thresholds: *thresholds-operstate } }
   "cell-clab-poc-c1pod1": { dataRef: "oper-state:c1pod1", fillColor: { thresholds: *thresholds-operstate } }
   "cell-clab-poc-pod1wan1": { dataRef: "oper-state:pod1wan1", fillColor: { thresholds: *thresholds-operstate } }
-  
-  # Spine 1 <-> Pod 1
+  "cell-clab-poc-pod2leaf1a": { dataRef: "oper-state:pod2leaf1a", fillColor: { thresholds: *thresholds-operstate } }
+  "cell-clab-poc-pod2leaf1b": { dataRef: "oper-state:pod2leaf1b", fillColor: { thresholds: *thresholds-operstate } }
+  "cell-clab-poc-pod3leaf1a": { dataRef: "oper-state:pod3leaf1a", fillColor: { thresholds: *thresholds-operstate } }
+  "cell-clab-poc-pod3leaf1b": { dataRef: "oper-state:pod3leaf1b", fillColor: { thresholds: *thresholds-operstate } }
+
+  # --- SPINE TO POD LINKS (Midpoints & IDs) ---
   "cell-mid:clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1": { dataRef: "oper-state:c1spine1:e1-1", fillColor: { thresholds: *thresholds-operstate } }
   "cell-link_id:clab-poc-c1spine1:e1-1:clab-poc-c1pod1:e1-1": { dataRef: "c1spine1:e1-1:out", strokeColor: { thresholds: *thresholds-traffic } }
   "cell-link_id:clab-poc-c1pod1:e1-1:clab-poc-c1spine1:e1-1": { dataRef: "c1pod1:e1-1:out", strokeColor: { thresholds: *thresholds-traffic } }
 
-  # Pod 1 <-> WAN
-  "cell-mid:clab-poc-pod1wan1:e1-1:clab-poc-c1pod1:e1-2": { dataRef: "oper-state:pod1wan1:e1-1", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-link_id:clab-poc-pod1wan1:e1-1:clab-poc-c1pod1:e1-2": { dataRef: "pod1wan1:e1-1:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-link_id:clab-poc-c1pod1:e1-2:clab-poc-pod1wan1:e1-1": { dataRef: "c1pod1:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
+  "cell-mid:clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1": { dataRef: "oper-state:c1spine1:e1-2", fillColor: { thresholds: *thresholds-operstate } }
+  "cell-link_id:clab-poc-c1spine1:e1-2:clab-poc-c1pod2:e1-1": { dataRef: "c1spine1:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
 
-  # WAN <-> Clients 1 & 2
+  "cell-mid:clab-poc-c2spine1:e1-1:clab-poc-c2pod1:e1-1": { dataRef: "oper-state:c2spine1:e1-1", fillColor: { thresholds: *thresholds-operstate } }
+  "cell-link_id:clab-poc-c2spine1:e1-1:clab-poc-c2pod1:e1-1": { dataRef: "c2spine1:e1-1:out", strokeColor: { thresholds: *thresholds-traffic } }
+
+  # --- WAN & CLIENT LINKS ---
   "cell-mid:clab-poc-pod1wan1:e1-2:clab-poc-client1:eth1": { dataRef: "oper-state:pod1wan1:e1-2", fillColor: { thresholds: *thresholds-operstate } }
   "cell-link_id:clab-poc-pod1wan1:e1-2:clab-poc-client1:eth1": { dataRef: "pod1wan1:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
   "cell-link_id:clab-poc-client1:eth1:clab-poc-pod1wan1:e1-2": { dataRef: "client1:eth1:out", strokeColor: { thresholds: *thresholds-traffic } }
-  
-  "cell-mid:clab-poc-pod1wan1:e1-4:clab-poc-client2:eth1": { dataRef: "oper-state:pod1wan1:e1-4", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-link_id:clab-poc-pod1wan1:e1-4:clab-poc-client2:eth1": { dataRef: "pod1wan1:e1-4:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-link_id:clab-poc-client2:eth1:clab-poc-pod1wan1:e1-4": { dataRef: "client2:eth1:out", strokeColor: { thresholds: *thresholds-traffic } }
 
-  # --- POD 2 (Leaf A & B) ---
-  "cell-clab-poc-c1pod2": { dataRef: "oper-state:c1pod2", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-clab-poc-pod2leaf1a": { dataRef: "oper-state:pod2leaf1a", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-clab-poc-pod2leaf1b": { dataRef: "oper-state:pod2leaf1b", fillColor: { thresholds: *thresholds-operstate } }
-
-  # Leaf 2a <-> Client 3 & 4
-  "cell-mid:clab-poc-pod2leaf1a:e1-2:clab-poc-client3:eth1": { dataRef: "oper-state:pod2leaf1a:e1-2", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-link_id:clab-poc-pod2leaf1a:e1-2:clab-poc-client3:eth1": { dataRef: "pod2leaf1a:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-link_id:clab-poc-client3:eth1:clab-poc-pod2leaf1a:e1-2": { dataRef: "client3:eth1:out", strokeColor: { thresholds: *thresholds-traffic } }
-
-  # Leaf 2b <-> Client 3 & 4
-  "cell-mid:clab-poc-pod2leaf1b:e1-2:clab-poc-client3:eth2": { dataRef: "oper-state:pod2leaf1b:e1-2", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-link_id:clab-poc-pod2leaf1b:e1-2:clab-poc-client3:eth2": { dataRef: "pod2leaf1b:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
-
-  # --- POD 3 (Leaf A & B) ---
-  "cell-clab-poc-c1pod3": { dataRef: "oper-state:c1pod3", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-clab-poc-pod3leaf1a": { dataRef: "oper-state:pod3leaf1a", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-clab-poc-pod3leaf1b": { dataRef: "oper-state:pod3leaf1b", fillColor: { thresholds: *thresholds-operstate } }
-
-  # Leaf 3a <-> Client 5 & 6
-  "cell-mid:clab-poc-pod3leaf1a:e1-2:clab-poc-client5:eth1": { dataRef: "oper-state:pod3leaf1a:e1-2", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-link_id:clab-poc-pod3leaf1a:e1-2:clab-poc-client5:eth1": { dataRef: "pod3leaf1a:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
-  
-  # Leaf 3b <-> Client 5 & 6
-  "cell-mid:clab-poc-pod3leaf1b:e1-2:clab-poc-client5:eth2": { dataRef: "oper-state:pod3leaf1b:e1-2", fillColor: { thresholds: *thresholds-operstate } }
-  "cell-link_id:clab-poc-pod3leaf1b:e1-2:clab-poc-client5:eth2": { dataRef: "pod3leaf1b:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
-
-  # --- ICONS ---
+  # --- SVG ICON MAPPINGS (Critical for visual nodes) ---
   "svg-image-mQJuYHohRk2Zf-XTfEKv": { dataRef: "oper-state:c1spine1", fillColor: { thresholds: *thresholds-operstate } }
   "svg-image-Yf9QwbMhZlMzaC8G7ZD-": { dataRef: "oper-state:c1pod1", fillColor: { thresholds: *thresholds-operstate } }
   "svg-image-XeCIC9QE-vLtYDekEke4": { dataRef: "oper-state:c1pod2", fillColor: { thresholds: *thresholds-operstate } }
   "svg-image--AtXZ33S8t7YKyeZoCB-": { dataRef: "oper-state:c1pod3", fillColor: { thresholds: *thresholds-operstate } }
+  "svg-image-c678BytqRJqyHCMxYQGl": { dataRef: "oper-state:pod2leaf1a", fillColor: { thresholds: *thresholds-operstate } }
+  "svg-image-SBgpVsDMyanp6Uj6O206": { dataRef: "oper-state:pod3leaf1a", fillColor: { thresholds: *thresholds-operstate } }
+  "svg-image-MNHe9-FqG-owafAV-H2E": { dataRef: "oper-state:pod2leaf1b", fillColor: { thresholds: *thresholds-operstate } }
+  "svg-image-hBkXxKhOgBITWwHyrytg": { dataRef: "oper-state:pod3leaf1b", fillColor: { thresholds: *thresholds-operstate } }
