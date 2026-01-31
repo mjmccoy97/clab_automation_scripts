@@ -89,13 +89,11 @@ cells:
   "cell-mid:clab-poc-pod3leaf1a:e1-1:clab-poc-c1pod3:e1-2": { dataRef: "oper-state:pod3leaf1a:e1-1", fillColor: { thresholds: *thresholds-operstate } }
   "cell-link_id:clab-poc-pod3leaf1a:e1-1:clab-poc-c1pod3:e1-2": { dataRef: "pod3leaf1a:e1-1:out", strokeColor: { thresholds: *thresholds-traffic } }
   "cell-link_id:clab-poc-c1pod3:e1-2:clab-poc-pod3leaf1a:e1-1": { dataRef: "c1pod3:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-mid:clab-poc-c1pod3:e1-2:clab-poc-pod3leaf1a:e1-1": { dataRef: "oper-state:c1pod3:e1-2", fillColor: { thresholds: *thresholds-operstate } }
   
   # Link to C2 Pod 3
   "cell-mid:clab-poc-pod3leaf1a:e1-3:clab-poc-c2pod3:e1-2": { dataRef: "oper-state:pod3leaf1a:e1-3", fillColor: { thresholds: *thresholds-operstate } }
   "cell-link_id:clab-poc-pod3leaf1a:e1-3:clab-poc-c2pod3:e1-2": { dataRef: "pod3leaf1a:e1-3:out", strokeColor: { thresholds: *thresholds-traffic } }
   "cell-link_id:clab-poc-c2pod3:e1-2:clab-poc-pod3leaf1a:e1-3": { dataRef: "c2pod3:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-mid:clab-poc-c2pod3:e1-2:clab-poc-pod3leaf1a:e1-3": { dataRef: "oper-state:c2pod3:e1-2", fillColor: { thresholds: *thresholds-operstate } }
   
   # Client 5 Connection
   "cell-mid:clab-poc-pod3leaf1a:e1-2:clab-poc-client5:eth1": { dataRef: "oper-state:pod3leaf1a:e1-2", fillColor: { thresholds: *thresholds-operstate } }
@@ -117,7 +115,6 @@ cells:
   "cell-mid:clab-poc-pod3leaf1b:e1-3:clab-poc-c2pod3:e1-4": { dataRef: "oper-state:pod3leaf1b:e1-3", fillColor: { thresholds: *thresholds-operstate } }
   "cell-link_id:clab-poc-pod3leaf1b:e1-3:clab-poc-c2pod3:e1-4": { dataRef: "pod3leaf1b:e1-3:out", strokeColor: { thresholds: *thresholds-traffic } }
   "cell-link_id:clab-poc-c2pod3:e1-4:clab-poc-pod3leaf1b:e1-3": { dataRef: "c2pod3:e1-4:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-mid:clab-poc-c2pod3:e1-4:clab-poc-pod3leaf1b:e1-3": { dataRef: "oper-state:c2pod3:e1-4", fillColor: { thresholds: *thresholds-operstate } }
   
   # Client 5 Connection
   "cell-mid:clab-poc-pod3leaf1b:e1-2:clab-poc-client5:eth2": { dataRef: "oper-state:pod3leaf1b:e1-2", fillColor: { thresholds: *thresholds-operstate } }
@@ -181,7 +178,6 @@ cells:
   "cell-mid:clab-poc-c2spine1:e1-3:clab-poc-c2pod3:e1-1": { dataRef: "oper-state:c2spine1:e1-3", fillColor: { thresholds: *thresholds-operstate } }
   "cell-link_id:clab-poc-c2spine1:e1-3:clab-poc-c2pod3:e1-1": { dataRef: "c2spine1:e1-3:out", strokeColor: { thresholds: *thresholds-traffic } }
   "cell-link_id:clab-poc-c2pod3:e1-1:clab-poc-c2spine1:e1-3": { dataRef: "c2pod3:e1-1:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-mid:clab-poc-c2pod3:e1-1:clab-poc-c2spine1:e1-3": { dataRef: "oper-state:c2pod3:e1-1", fillColor: { thresholds: *thresholds-operstate } }
 
   # C2 Pod 1
   "cell-group-clab-poc-c2pod1": {}
@@ -218,12 +214,10 @@ cells:
   "cell-mid:clab-poc-pod1wan1:e1-2:clab-poc-client1:eth1": { dataRef: "oper-state:pod1wan1:e1-2", fillColor: { thresholds: *thresholds-operstate } }
   "cell-link_id:clab-poc-pod1wan1:e1-2:clab-poc-client1:eth1": { dataRef: "pod1wan1:e1-2:out", strokeColor: { thresholds: *thresholds-traffic } }
   "cell-link_id:clab-poc-client1:eth1:clab-poc-pod1wan1:e1-2": { dataRef: "client1:eth1:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-mid:clab-poc-client1:eth1:clab-poc-pod1wan1:e1-2": { dataRef: "oper-state:client1:eth1", fillColor: { thresholds: *thresholds-operstate } }
   "cell-clab-poc-pod1wan1:e1-4:clab-poc-client2:eth1": { dataRef: "oper-state:pod1wan1:e1-4", fillColor: { thresholds: *thresholds-operstate } }
   "cell-mid:clab-poc-pod1wan1:e1-4:clab-poc-client2:eth1": { dataRef: "oper-state:pod1wan1:e1-4", fillColor: { thresholds: *thresholds-operstate } }
   "cell-link_id:clab-poc-pod1wan1:e1-4:clab-poc-client2:eth1": { dataRef: "pod1wan1:e1-4:out", strokeColor: { thresholds: *thresholds-traffic } }
   "cell-link_id:clab-poc-client2:eth1:clab-poc-pod1wan1:e1-4": { dataRef: "client2:eth1:out", strokeColor: { thresholds: *thresholds-traffic } }
-  "cell-mid:clab-poc-client2:eth1:clab-poc-pod1wan1:e1-4": { dataRef: "oper-state:client2:eth1", fillColor: { thresholds: *thresholds-operstate } }
 
   # Client 1
   "cell-group-clab-poc-client1": {}
