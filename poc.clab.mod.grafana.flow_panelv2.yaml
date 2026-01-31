@@ -284,3 +284,4 @@ cells:
   "cell-clab-poc-pod3leaf1b:e1-3:clab-poc-c2pod3:e1-4": { dataRef: "oper-state:pod3leaf1b:e1-3", fillColor: { thresholds: *thresholds-operstate } }
   "cell-clab-poc-pod3leaf1b:e1-2:clab-poc-client5:eth2": { dataRef: "oper-state:pod3leaf1b:e1-2", fillColor: { thresholds: *thresholds-operstate } }
   "cell-clab-poc-pod3leaf1b:e1-4:clab-poc-client6:eth2": { dataRef: "oper-state:pod3leaf1b:e1-4", fillColor: { thresholds: *thresholds-operstate } }
+  #END OF FILE
