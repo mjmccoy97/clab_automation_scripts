@@ -12,7 +12,7 @@ anchors:
     - color: gray
       level: 0
     - color: green
-      level: 199
+      level: 1
     - color: yellow
       level: 500
     - color: orange
