@@ -322,6 +322,9 @@ def main():
     parser.add_argument("--route-delta", type=int, required=True,
                        help="Number of routes being advertised (used with the "
                             "auto-detected baseline to compute the target)")
+    parser.add_argument("--direction", choices=["up", "down"], default="up",
+                        help="up (default): advertise, count rises by --route-delta. "
+                             "down: withdraw, count falls by --route-delta")
     parser.add_argument("--start-margin", type=int, default=100,
                        help="Margin added above the detected baseline for the start "
                             "threshold (default: 100)")
@@ -333,7 +336,7 @@ def main():
     parser.add_argument("-o", "--output", default="route_stats",
                        help="Output filename prefix (default: route_stats)")
     parser.add_argument("--cpu-metric", default="platform_control_cpu_total_instant",
-                       help="Prometheus metric for CPU% (default: "
+                       help="Prometheus metric for CPU%% (default: "
                             "platform_control_cpu_total_instant)")
     parser.add_argument("--memory-metric", default="platform_control_memory_reserved",
                        help="Prometheus metric for memory in bytes, converted to MB per "
@@ -352,6 +355,12 @@ def main():
                             "NOT a return-to-baseline check, since CPU may plateau at a new, "
                             "higher steady state after learning a large route set, not the "
                             "value it started at")
+    parser.add_argument("--settle-max-above-baseline", type=float, default=None,
+                       help="Also require the settled window to sit within this many CPU points of "
+                            "the pre-test CPU baseline (read before the event). Off by default. "
+                            "Flatness alone can fire on a busy plateau - e.g. SR Linux holds "
+                            "~53-64%% flat for ~20s while programming a 1M-route FIB, and a "
+                            "flat-only check declared 'settled' in the middle of it")
     parser.add_argument("--settle-max-wait", type=float, default=120,
                        help="Give up waiting for CPU to settle after this many seconds past "
                             "route convergence (default: 120) - a real safety ceiling, since "
@@ -384,10 +393,31 @@ def main():
     # which is a local "how long has this script been waiting" concern and
     # deliberately doesn't need to agree with Prometheus's clock at all.
 
-    start_val = baseline + args.start_margin
-    end_val = baseline + args.route_delta
+    # --direction down mirrors everything for withdraw measurement: the start
+    # margin sits BELOW baseline (same jitter-absorbing purpose), and the end
+    # target is baseline - route_delta with no margin above it - declaring a
+    # withdraw complete while routes are still lingering would hide exactly
+    # the tail behavior the measurement exists to capture.
+    down = args.direction == "down"
+    sign = -1 if down else 1
+    start_val = baseline + sign * args.start_margin
+    end_val = baseline + sign * args.route_delta
+
+    def reached_end(count):
+        return count <= end_val if down else count >= end_val
+
+    def past_start(count):
+        return count < start_val if down else count > start_val
 
     print(f"Baseline: {baseline}")
+    cpu_baseline = None
+    if not args.skip_system_metrics and args.settle_max_above_baseline is not None:
+        _src = labels.get("source", args.device_label)
+        _, cpu_baseline = prom_instant_query(
+            args.prometheus_url,
+            f'{args.cpu_metric}{{source="{_src}",control_slot="{args.control_slot}",cpu_index="all"}}')
+        print(f"CPU baseline: {cpu_baseline}% (settled also requires <= "
+              f"{cpu_baseline + args.settle_max_above_baseline if cpu_baseline is not None else '?'}%)")
     print(f"Using start={start_val} end={end_val} "
           f"(start-margin={args.start_margin}, end has no margin)\n")
 
@@ -402,7 +432,7 @@ def main():
         local_elapsed = time.time() - loop_start_local
         poll_ts, current = prom_instant_query(args.prometheus_url, promql)
         print(f"  [{local_elapsed:.1f}s] current={current}")
-        if current is not None and current >= end_val:
+        if current is not None and reached_end(current):
             converged = True
             test_end_time = poll_ts
             break
@@ -456,7 +486,9 @@ def main():
 
             if len(recent) == args.settle_window:
                 vals = [v for _, v in recent]
-                if max(vals) - min(vals) <= args.settle_threshold:
+                low_enough = (cpu_baseline is None or
+                              max(vals) <= cpu_baseline + args.settle_max_above_baseline)
+                if max(vals) - min(vals) <= args.settle_threshold and low_enough:
                     settle_detected = True
                     final_data_end_time = recent[0][0]  # start of the stable window
                     settle_time_val = final_data_end_time - route_convergence_end
@@ -549,11 +581,11 @@ def main():
     start_idx = None
     end_idx = None
     for i, count in enumerate(route_counts):
-        if count > start_val:
+        if past_start(count):
             start_idx = max(0, i - 1)
             break
     for i, count in enumerate(route_counts):
-        if count >= end_val:
+        if reached_end(count):
             end_idx = i
             break
 
@@ -562,7 +594,7 @@ def main():
     if start_idx is not None and end_idx is not None:
         st, et = elapsed_times[start_idx], elapsed_times[end_idx]
         conv_time = et - st
-        route_delta_actual = end_val - start_val
+        route_delta_actual = abs(end_val - start_val)
         conv_rate = route_delta_actual / conv_time if conv_time > 0 else 0
 
         if end_idx == start_idx + 1:

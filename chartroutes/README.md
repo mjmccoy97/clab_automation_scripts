@@ -427,3 +427,20 @@ For issues or questions:
 2. Run with debug flag (`-x`)
 3. Check gNMI connectivity manually with gNMIc
 4. Review SR Linux gNMI documentation
+
+## chartroutes_prometheus.py: withdraw measurement and CPU settle options
+
+`chartroutes_prometheus.py` (the Prometheus-backed sibling of `chartroutes_srlinux.py`; full description in its docstring) has two options for convergence testing:
+
+- `--direction {up,down}`: `up` (default) measures an advertise, where the route count rises by `--route-delta`. `down` measures a withdraw, where it falls. In `down` mode the start margin sits *below* the baseline, and the end target (`baseline - route_delta`) gets no margin, so a withdraw is never declared complete while routes are still lingering.
+- `--settle-max-above-baseline N`: by default, "CPU settled" only means CPU stopped moving (`--settle-window` samples within `--settle-threshold` points). That can fire on a busy plateau: a router programming a large FIB can hold its CPU flat at a high level for tens of seconds. With this option set, the settled window must also sit within `N` CPU points of the pre-test CPU (read before the event), so the run only counts as over once the CPU is back to a low steady state. Off by default for backward compatibility.
+
+Example, measuring a 1M-route withdraw and requiring CPU back within 10 points of its starting level:
+
+```bash
+python chartroutes_prometheus.py --prometheus-url http://localhost:9090 \
+  --metric network_instance_route_table_ipv4_unicast_statistics_active_routes \
+  --label network_instance_name=default --label source=leaf1 --device-label leaf1 \
+  --route-delta 1000000 --direction down \
+  --poll-interval 1 --settle-window 15 --settle-max-above-baseline 10 -o withdraw_run
+```
